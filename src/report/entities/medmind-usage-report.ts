@@ -44,6 +44,12 @@ export class MedmindUsageReportItem {
   @Field(() => Int, { description: "The user's current balance" })
   balance: number
 
+  @Field({
+    nullable: true,
+    description: "The last date on which a notification was sent to the user (null if no notification was ever sent)"
+  })
+  lastNotificationDate: string
+
   @Field()
   tenantId: string
 
