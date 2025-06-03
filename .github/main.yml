@@ -1,0 +1,27 @@
+name: Deploy admin gateway
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy admin gateway to remote server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          set -xe
+          export PATH="$PATH:/root/.local/share/fnm/node-versions/v20.10.0/installation/bin/"
+          cd ~/circles/${{ github.event.repository.name }}
+          git pull
+          npm i
+          npm run build
+          pm2 reload admin-gateway
+      
+      

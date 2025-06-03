@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config'
 import { UserPayload } from 'src/auth/auth.service'
 import { DecodeJWT } from 'src/helpers/jwtDecode'

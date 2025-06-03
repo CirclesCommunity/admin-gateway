@@ -49,10 +49,13 @@ export class MedmindUsageReportItem {
     description: "The last date on which a notification was sent to the user (null if no notification was ever sent)"
   })
   lastNotificationDate: string
-
+  
   @Field()
   tenantId: string
 
+  @Field()
+  userId: string
+  
   @Field({ description: "The date on which the user has registered (in ISO format with UTC offset)" })
   registeredAt: string
 }
