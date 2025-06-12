@@ -5,9 +5,6 @@ export class MedmindUserNotification {
   @Field()
   _id: string
 
-  @Field()
-  tenantId: string
-
   @Field(() => [String], { description: "The users targeted by the notification" })
   userIds: string[]
 

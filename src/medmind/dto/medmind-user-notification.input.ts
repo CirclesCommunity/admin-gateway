@@ -2,8 +2,6 @@ import { Field, InputType } from '@nestjs/graphql'
 
 @InputType()
 export class MedmindUserNotificationInput {
-  @Field()
-  tenantId: string
   
   @Field(() => [String], { description: "The users targeted by the notification" })
   userIds: string[]

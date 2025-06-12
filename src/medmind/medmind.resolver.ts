@@ -20,7 +20,6 @@ export class MedmindResolver {
   @Query(() => MedmindUserNotificationList)
   async getMedmindUserNotifications(
     @Args("token") token: string,
-    @Args("tenantId") tenantId: string,
     @Args("userId") userId: string,
     @Args("startDate", { nullable: true }) startDate: string,
     @Args("endDate", { nullable: true }) endDate: string,
@@ -28,7 +27,7 @@ export class MedmindResolver {
     @Args("pageSize", { type: () => Int }) pageSize: number
   ): Promise<MedmindUserNotificationList> {
     return await this.medmindService.getMedmindUserNotifications(
-      token, tenantId, userId, startDate, endDate, pageNumber, pageSize
+      token, userId, startDate, endDate, pageNumber, pageSize
     )
   }
 }

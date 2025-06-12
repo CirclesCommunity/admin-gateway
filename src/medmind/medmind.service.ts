@@ -33,7 +33,6 @@ export class MedmindService {
 
   async getMedmindUserNotifications(
     token: string,
-    tenantId: string,
     userId: string,
     startDate: string,
     endDate: string,
@@ -46,7 +45,6 @@ export class MedmindService {
     ) as UserPayload
 
     const query = new URLSearchParams({
-      tenantId,
       userId,
       pageNumber: pageNumber.toString(),
       pageSize: pageSize.toString() 
