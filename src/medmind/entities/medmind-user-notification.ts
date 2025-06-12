@@ -8,8 +8,8 @@ export class MedmindUserNotification {
   @Field()
   tenantId: string
 
-  @Field({ description: "The user targeted by the notification" })
-  userId: string
+  @Field(() => [String], { description: "The users targeted by the notification" })
+  userIds: string[]
 
   @Field({ description: "The body of the notification message" })
   content: string
