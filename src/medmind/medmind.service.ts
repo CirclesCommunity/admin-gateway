@@ -5,6 +5,8 @@ import { MedmindUserNotificationInput } from './dto/medmind-user-notification.in
 import { MedmindUserNotification, MedmindUserNotificationList } from './entities/medmind-user-notification'
 import { UserPayload } from 'src/auth/auth.service'
 import { DecodeJWT } from 'src/helpers/jwtDecode'
+import { MedmindTenantStats } from './entities/medmind-tenant-stats'
+import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 
 @Injectable()
 export class MedmindService {
@@ -59,5 +61,45 @@ export class MedmindService {
     ) as MedmindUserNotificationList
 
     return result
+  }
+
+  async updateMedmindTenantStats(
+    token: string,
+    tenantStats: MedmindTenantStatsInput
+  ): Promise<MedmindTenantStats> {
+    const decodedToken: UserPayload = DecodeJWT(
+      token,
+      this.configService.get("JWT_SECRET")
+    ) as UserPayload
+
+    const result = await this.httpService.PutHttpRequest(
+      this.configService.get("CHATBOT"),
+      "/tenant-stats",
+      tenantStats
+    ) as MedmindTenantStats
+
+    return result
+  }
+
+  async getMedmindTenantStats(token: string): Promise<MedmindTenantStats> {
+    try {
+      const decodedToken: UserPayload = DecodeJWT(
+        token,
+        this.configService.get('JWT_SECRET'),
+      ) as UserPayload;
+
+      const tenantId = decodedToken.tenant
+
+      const query = new URLSearchParams({ tenantId })
+      
+      const result = await this.httpService.GetHttpRequest(
+        this.configService.get("CHATBOT"),
+        `/tenant-stats?${query}`
+      ) as unknown as MedmindTenantStats
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 }

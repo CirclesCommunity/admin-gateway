@@ -2,6 +2,8 @@ import { Args, Int, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { MedmindService } from './medmind.service'
 import { MedmindUserNotificationInput } from './dto/medmind-user-notification.input'
 import { MedmindUserNotification, MedmindUserNotificationList } from './entities/medmind-user-notification'
+import { MedmindTenantStats } from './entities/medmind-tenant-stats'
+import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 
 @Resolver()
 export class MedmindResolver {
@@ -29,5 +31,22 @@ export class MedmindResolver {
     return await this.medmindService.getMedmindUserNotifications(
       token, userId, startDate, endDate, pageNumber, pageSize
     )
+  }
+
+  @Mutation(() => MedmindTenantStats)
+  async updateMedmindTenantStats(
+    @Args("token") token: string,
+    @Args("tenantStats") tenantStats: MedmindTenantStatsInput
+  ): Promise<MedmindTenantStats> {
+    return await this.medmindService.updateMedmindTenantStats(
+      token, tenantStats
+    )
+  }
+
+  @Query(() => MedmindTenantStats)
+  async getMedmindTenantStats(
+    @Args("token") token: string
+  ): Promise<MedmindTenantStats> {
+    return await this.medmindService.getMedmindTenantStats(token)
   }
 }
