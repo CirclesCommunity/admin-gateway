@@ -46,9 +46,10 @@ export class MedmindResolver {
 
   @Query(() => MedmindTenantStats)
   async getMedmindTenantStats(
-    @Args("token") token: string
+    @Args('token') token: string,
+    @Args('tenantId', { nullable: true }) tenantId: string,
   ): Promise<MedmindTenantStats> {
-    return await this.medmindService.getMedmindTenantStats(token)
+    return await this.medmindService.getMedmindTenantStats(token, tenantId);
   }
 
   @Query(() => [MedmindPackages])

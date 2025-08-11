@@ -77,8 +77,8 @@ export class MedmindTenantStats {
   @Field()
   approxCasesLeft: number
 
-  @Field(() => MedmindSubscription)
-  subscription: MedmindSubscription
+  @Field(() => [MedmindSubscription])
+  subscriptions: MedmindSubscription[]
 
   @Field(() => [MedmindResellerPackage], { nullable: true })
   resellerPackages: MedmindResellerPackage[]
