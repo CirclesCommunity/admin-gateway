@@ -4,6 +4,7 @@ import { MedmindUserNotificationInput } from './dto/medmind-user-notification.in
 import { MedmindUserNotification, MedmindUserNotificationList } from './entities/medmind-user-notification'
 import { MedmindTenantStats } from './entities/medmind-tenant-stats'
 import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
+import { MedmindPackages } from './entities/medmind-packages'
 
 @Resolver()
 export class MedmindResolver {
@@ -48,5 +49,16 @@ export class MedmindResolver {
     @Args("token") token: string
   ): Promise<MedmindTenantStats> {
     return await this.medmindService.getMedmindTenantStats(token)
+  }
+
+  @Query(() => [MedmindPackages])
+  async findAllMedmindPackages(
+    @Args("token", { nullable: true }) token: string,
+    @Args("pageNumber", { type: () => Int }) pageNumber: number,
+    @Args("pageSize", { type: () => Int }) pageSize: number,
+  ): Promise<MedmindPackages> {
+    return await this.medmindService.findAllMedmindPackages(
+      token, pageNumber, pageSize
+    );
   }
 }

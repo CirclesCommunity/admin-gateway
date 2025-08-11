@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from 'src/http/http.service'
 import { MedmindUserNotificationInput } from './dto/medmind-user-notification.input'
@@ -7,6 +7,7 @@ import { UserPayload } from 'src/auth/auth.service'
 import { DecodeJWT } from 'src/helpers/jwtDecode'
 import { MedmindTenantStats } from './entities/medmind-tenant-stats'
 import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
+import { MedmindPackages } from './entities/medmind-packages'
 
 @Injectable()
 export class MedmindService {
@@ -99,6 +100,29 @@ export class MedmindService {
 
       return result;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async findAllMedmindPackages(
+    token: string,
+    pageNumber: number,
+    pageSize: number
+  ): Promise<MedmindPackages> {
+    try {
+      const query = new URLSearchParams({
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+      })
+
+      const result = await this.httpService.GetHttpRequest(
+        this.configService.get('CHATBOT'),
+        `/medmind-package?${query}`
+      ) as unknown as MedmindPackages;
+
+      return result;
+    } catch (error) {
+      Logger.log(error);
       throw error;
     }
   }
