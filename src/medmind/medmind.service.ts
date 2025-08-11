@@ -81,16 +81,16 @@ export class MedmindService {
     return result
   }
 
-  async getMedmindTenantStats(token: string): Promise<MedmindTenantStats> {
+  async getMedmindTenantStats(token: string, tenantId?: string): Promise<MedmindTenantStats> {
     try {
       const decodedToken: UserPayload = DecodeJWT(
         token,
         this.configService.get('JWT_SECRET'),
       ) as UserPayload;
 
-      const tenantId = decodedToken.tenant
+      const effectiveTenantId = decodedToken.tenant || tenantId
 
-      const query = new URLSearchParams({ tenantId })
+      const query = new URLSearchParams({ tenantId: effectiveTenantId })
       
       const result = await this.httpService.GetHttpRequest(
         this.configService.get("CHATBOT"),
