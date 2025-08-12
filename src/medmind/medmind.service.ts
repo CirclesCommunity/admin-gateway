@@ -78,8 +78,8 @@ export class MedmindService {
 
     const result = await this.httpService.PutHttpRequest(
       this.configService.get("CHATBOT"),
-      `/tenant-stats?${query}`,
-      tenantStats
+      `/tenant-stats`,
+      { tenantId, tenantStats }
     ) as MedmindTenantStats
 
     return result
