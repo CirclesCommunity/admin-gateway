@@ -37,10 +37,11 @@ export class MedmindResolver {
   @Mutation(() => MedmindTenantStats)
   async updateMedmindTenantStats(
     @Args("token") token: string,
+    @Args('tenantId') tenantId: string,
     @Args("tenantStats") tenantStats: MedmindTenantStatsInput
   ): Promise<MedmindTenantStats> {
     return await this.medmindService.updateMedmindTenantStats(
-      token, tenantStats
+      token, tenantId, tenantStats
     )
   }
 
