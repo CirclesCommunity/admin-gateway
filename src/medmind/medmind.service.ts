@@ -66,6 +66,7 @@ export class MedmindService {
 
   async updateMedmindTenantStats(
     token: string,
+    tenantId: string,
     tenantStats: MedmindTenantStatsInput
   ): Promise<MedmindTenantStats> {
     const decodedToken: UserPayload = DecodeJWT(
@@ -73,9 +74,11 @@ export class MedmindService {
       this.configService.get("JWT_SECRET")
     ) as UserPayload
 
+    const query = new URLSearchParams({ tenantId })
+
     const result = await this.httpService.PutHttpRequest(
       this.configService.get("CHATBOT"),
-      "/tenant-stats",
+      `/tenant-stats?${query}`,
       tenantStats
     ) as MedmindTenantStats
 
