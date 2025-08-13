@@ -22,6 +22,9 @@ export class MobilePackage {
   @Field()
   category: string;
 
+  @Field()
+  credit: number;
+
   @Field(() => MobilePackageBillingPeriod)
   billingPeriod: MobilePackageBillingPeriod;
 }
