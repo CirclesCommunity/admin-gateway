@@ -14,6 +14,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { GraphQLFormattedError } from 'graphql'
 import { ReportModule } from './report/report.module';
 import { MedmindModule } from './medmind/medmind.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -51,7 +52,8 @@ import { MedmindModule } from './medmind/medmind.module';
     AuthModule,
     LoggerModule,
     ReportModule,
-    MedmindModule
+    MedmindModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [
