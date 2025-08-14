@@ -19,6 +19,15 @@ export class MedmindUsageReportEntry {
 }
 
 @ObjectType()
+export class MedmindUsageReportUserTag {
+  @Field()
+  label: string
+
+  @Field()
+  color: string
+}
+
+@ObjectType()
 export class MedmindUsageReportItem {
   @Field({ description: "Full name of the user in English" })
   name: string
@@ -43,6 +52,9 @@ export class MedmindUsageReportItem {
 
   @Field(() => Int, { description: "The user's current balance" })
   balance: number
+
+  @Field(() => [MedmindUsageReportUserTag], { description: "The user's tags" })
+  tags: MedmindUsageReportUserTag[]
 
   @Field({
     nullable: true,

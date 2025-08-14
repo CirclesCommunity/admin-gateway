@@ -22,6 +22,15 @@ export class MedmindUserSpeciality {
 }
 
 @ObjectType()
+export class MedmindUsersReportUserTag {
+  @Field()
+  label: string
+
+  @Field()
+  color: string
+}
+
+@ObjectType()
 export class MedmindUsersReportItem {
   @Field()
   name: string
@@ -37,6 +46,9 @@ export class MedmindUsersReportItem {
 
   @Field(() => MedmindUserSubscription)
   subscription: MedmindUserSubscription
+
+  @Field(() => [MedmindUsersReportUserTag])
+  tags: MedmindUsersReportUserTag[]
 
   @Field()
   tenantId: string
