@@ -92,4 +92,21 @@ export class UserService {
 
     return result
   }
+
+  async deleteUserTag(
+    token: string,
+    tagId: string
+  ): Promise<UserTag> {
+    const decodedToken: UserPayload = DecodeJWT(
+      token,
+      this.configService.get("JWT_SECRET")
+    ) as UserPayload
+    
+    const result = await this.httpService.DeleteHttpRequest(
+      this.configService.get("USERS"),
+      `/user-tag/${tagId}`,
+    ) as UserTag
+
+    return result
+  }
 }

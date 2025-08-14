@@ -44,4 +44,12 @@ export class UserResolver {
   ): Promise<UserTag> {
     return await this.userService.updateUserTag(token, tagId, userTag)
   }
+  
+  @Mutation(() => SuccessResult)
+  async deleteUserTag(
+    @Args("token") token: string,
+    @Args("tagId") tagId: string
+  ): Promise<UserTag> {
+    return await this.userService.deleteUserTag(token, tagId)
+  }
 }
