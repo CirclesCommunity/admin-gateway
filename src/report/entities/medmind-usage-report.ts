@@ -53,7 +53,7 @@ export class MedmindUsageReportItem {
   @Field(() => Int, { description: "The user's current balance" })
   balance: number
 
-  @Field(() => [MedmindUsageReportUserTag], { description: "The user's tags" })
+  @Field(() => [MedmindUsageReportUserTag], { description: "The user's tags", nullable: true })
   tags: MedmindUsageReportUserTag[]
 
   @Field({
