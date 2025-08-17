@@ -3,7 +3,6 @@ import { ReportService } from './report.service'
 import { SuccessResult } from 'src/shared/response'
 import { MedmindUsageReport } from './entities/medmind-usage-report'
 import { MedmindUsersReport } from './entities/medmind-users-report'
-import { InternalServerErrorException } from '@nestjs/common'
 
 @Resolver()
 export class ReportResolver {
@@ -15,7 +14,6 @@ export class ReportResolver {
   async generateMedmindUsageReport(
     @Args("token") token: string
   ): Promise<SuccessResult> {
-    return { success: true }
     return await this.reportService.generateMedmindUsageReport(token)
   }
 
