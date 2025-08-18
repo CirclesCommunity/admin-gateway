@@ -14,7 +14,8 @@ export class ReportResolver {
   async generateMedmindUsageReport(
     @Args("token") token: string
   ): Promise<SuccessResult> {
-    return await this.reportService.generateMedmindUsageReport(token)
+    return { success: true }
+    // return await this.reportService.generateMedmindUsageReport(token)
   }
 
   @Query(() => MedmindUsageReport)
