@@ -53,7 +53,10 @@ export class MedmindUsageReportItem {
   @Field(() => [MedmindUserSpecialitySchema])
   specialities: MedmindUserSpecialitySchema[]
 
-  @Field(() => MedmindUserEducation, { nullable: true })
+  @Field(() => MedmindUserEducation, {
+    nullable: true,
+    description: "The user's education level and sublevel"
+  })
   education: MedmindUserEducation
 
   @Field(() => [MedmindUsageReportEntry])
@@ -73,6 +76,9 @@ export class MedmindUsageReportItem {
     description: "The last date on which a notification was sent to the user (null if no notification was ever sent)"
   })
   lastNotificationDate: string
+
+  @Field({ nullable: true, description: "The last login date" })
+  lastLogin: string
   
   @Field()
   tenantId: string
