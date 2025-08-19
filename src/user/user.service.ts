@@ -109,4 +109,42 @@ export class UserService {
 
     return result
   }
+
+  async addTagsToUser(
+    token: string,
+    userIds: string[],
+    tags: UserTagInput[]
+  ): Promise<SuccessResult> {
+    const decodedToken: UserPayload = DecodeJWT(
+      token,
+      this.configService.get("JWT_SECRET")
+    ) as UserPayload
+    
+    const result = await this.httpService.PutHttpRequest(
+      this.configService.get("USERS"),
+      "/user/tags/add",
+      { userIds, tags }
+    ) as SuccessResult
+
+    return result
+  }
+
+  async removeTagsFromUser(
+    token: string,
+    userIds: string[],
+    tags: string[]
+  ): Promise<SuccessResult> {
+    const decodedToken: UserPayload = DecodeJWT(
+      token,
+      this.configService.get("JWT_SECRET")
+    ) as UserPayload
+    
+    const result = await this.httpService.PutHttpRequest(
+      this.configService.get("USERS"),
+      "/user/tags/remove",
+      { userIds, tags }
+    ) as SuccessResult
+
+    return result
+  }
 }

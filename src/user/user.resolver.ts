@@ -52,4 +52,22 @@ export class UserResolver {
   ): Promise<UserTag> {
     return await this.userService.deleteUserTag(token, tagId)
   }
+  
+  @Mutation(() => SuccessResult)
+  async addTagsToUser(
+    @Args("token") token: string,
+    @Args("userIds", { type: () => [String] }) userIds: string[],
+    @Args("tags", { type: () => [UserTagInput] }) tags: UserTagInput[]
+  ): Promise<SuccessResult> {
+    return await this.userService.addTagsToUser(token, userIds, tags)
+  }
+
+  @Mutation(() => SuccessResult)
+  async removeTagsFromUser(
+    @Args("token") token: string,
+    @Args("userIds", { type: () => [String] }) userIds: string[],
+    @Args("tags", { type: () => [String] }) tags: string[]
+  ): Promise<SuccessResult> {
+    return await this.userService.removeTagsFromUser(token, userIds, tags)
+  }
 }
