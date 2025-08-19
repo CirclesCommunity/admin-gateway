@@ -28,6 +28,15 @@ export class MedmindUsageReportUserTag {
 }
 
 @ObjectType()
+export class MedmindUserEducation {
+  @Field({ nullable: true })
+  level: string
+
+  @Field({ nullable: true })
+  sublevel: string
+}
+
+@ObjectType()
 export class MedmindUsageReportItem {
   @Field({ description: "Full name of the user in English" })
   name: string
@@ -43,6 +52,9 @@ export class MedmindUsageReportItem {
 
   @Field(() => [MedmindUserSpecialitySchema])
   specialities: MedmindUserSpecialitySchema[]
+
+  @Field(() => MedmindUserEducation, { nullable: true })
+  education: MedmindUserEducation
 
   @Field(() => [MedmindUsageReportEntry])
   entries: MedmindUsageReportEntry[]
