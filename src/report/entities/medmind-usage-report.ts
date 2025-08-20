@@ -37,6 +37,18 @@ export class MedmindUserEducation {
 }
 
 @ObjectType()
+export class MedmindUsageReportSubscription {
+  @Field()
+  packageId: string
+
+  @Field()
+  startDate: string
+
+  @Field()
+  expiryDate: string
+}
+
+@ObjectType()
 export class MedmindUsageReportItem {
   @Field({ description: "Full name of the user in English" })
   name: string
@@ -71,13 +83,16 @@ export class MedmindUsageReportItem {
   @Field(() => [MedmindUsageReportUserTag], { description: "The user's tags", nullable: true })
   tags: MedmindUsageReportUserTag[]
 
+  @Field(() => MedmindUsageReportSubscription, { description: "The details of the user's current subscription plan" })
+  subscription: MedmindUsageReportSubscription
+
   @Field({
     nullable: true,
     description: "The last date on which a notification was sent to the user (null if no notification was ever sent)"
   })
   lastNotificationDate: string
 
-  @Field({ nullable: true, description: "The last login date" })
+  @Field({ nullable: true, description: "The user's last login date" })
   lastLogin: string
   
   @Field()
