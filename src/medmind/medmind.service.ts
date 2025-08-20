@@ -10,6 +10,7 @@ import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 import { MedmindPackages } from './entities/medmind-packages'
 import { SuccessResult } from 'src/shared/response'
 import { MedmindTenantStatsBulkUpdateInput } from './dto/medmind-tenant-stats-bulk-update.input'
+import { MedmindCaseEntries } from './entities/medmind-case-entries'
 
 @Injectable()
 export class MedmindService {
@@ -153,6 +154,43 @@ export class MedmindService {
         this.configService.get('CHATBOT'),
         `/medmind-package?${query}`
       ) as unknown as MedmindPackages
+
+      return result
+    } catch (error) {
+      Logger.log(error)
+      throw error
+    }
+  }
+
+  async findAllMedmindCaseEntries(
+    token: string,
+    tenantId: string,
+    assistant: string,
+    startDate: string,
+    endDate: string,
+    pageNumber: number,
+    pageSize: number
+  ): Promise<MedmindCaseEntries> {
+    try {
+      const decodedToken: UserPayload = DecodeJWT(
+        token,
+        this.configService.get('JWT_SECRET'),
+      ) as UserPayload
+
+      const query = new URLSearchParams({
+        tenantId,
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString(),
+      })
+
+      if (assistant) query.set("assistant", assistant)
+      if (startDate) query.set("startDate", startDate)
+      if (endDate) query.set("endDate", endDate)
+
+      const result = await this.httpService.GetHttpRequest(
+        this.configService.get('CHATBOT'),
+        `/medmind-case/entries?${query}`
+      ) as unknown as MedmindCaseEntries
 
       return result
     } catch (error) {

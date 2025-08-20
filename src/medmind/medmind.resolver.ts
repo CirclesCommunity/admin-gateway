@@ -7,6 +7,7 @@ import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 import { MedmindPackages } from './entities/medmind-packages'
 import { SuccessResult } from 'src/shared/response'
 import { MedmindTenantStatsBulkUpdateInput } from './dto/medmind-tenant-stats-bulk-update.input'
+import { MedmindCaseEntries } from './entities/medmind-case-entries'
 
 @Resolver()
 export class MedmindResolver {
@@ -73,5 +74,20 @@ export class MedmindResolver {
     return await this.medmindService.findAllMedmindPackages(
       token, pageNumber, pageSize
     );
+  }
+
+  @Query(() => MedmindCaseEntries)
+  async findAllMedmindCaseEntries(
+    @Args("token") token: string,
+    @Args("tenantId") tenantId: string,
+    @Args("assistant", { nullable: true }) assistant: string,
+    @Args("startDate") startDate: string,
+    @Args("endDate") endDate: string,
+    @Args("pageNumber") pageNumber: number,
+    @Args("pageSize") pageSize: number
+  ): Promise<MedmindCaseEntries> {
+    return await this.medmindService.findAllMedmindCaseEntries(
+      token, tenantId, assistant, startDate, endDate, pageNumber, pageSize
+    )
   }
 }
