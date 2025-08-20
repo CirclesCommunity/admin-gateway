@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { HttpService } from 'src/http/http.service'
 import { MedmindUserNotificationInput } from './dto/medmind-user-notification.input'
@@ -8,6 +8,8 @@ import { DecodeJWT } from 'src/helpers/jwtDecode'
 import { MedmindTenantStats } from './entities/medmind-tenant-stats'
 import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 import { MedmindPackages } from './entities/medmind-packages'
+import { SuccessResult } from 'src/shared/response'
+import { MedmindTenantStatsBulkUpdateInput } from './dto/medmind-tenant-stats-bulk-update.input'
 
 @Injectable()
 export class MedmindService {
@@ -85,12 +87,36 @@ export class MedmindService {
     return result
   }
 
+  async bulkUpdateMedmindTenantStats(
+    token: string,
+    tenantIds: string[],
+    updates: MedmindTenantStatsBulkUpdateInput
+  ): Promise<SuccessResult> {
+    try {
+      const decodedToken: UserPayload = DecodeJWT(
+        token,
+        this.configService.get('JWT_SECRET'),
+      ) as UserPayload
+
+      const result = await this.httpService.PostHttpRequest(
+        this.configService.get('CHATBOT'),
+        "/tenant-stats/balance",
+        { tenantIds, updates }
+      ) as unknown as SuccessResult
+
+      return result
+    } catch (error) {
+      Logger.log(error)
+      throw error
+    }
+  }
+
   async getMedmindTenantStats(token: string, tenantId?: string): Promise<MedmindTenantStats> {
     try {
       const decodedToken: UserPayload = DecodeJWT(
         token,
         this.configService.get('JWT_SECRET'),
-      ) as UserPayload;
+      ) as UserPayload
 
       const effectiveTenantId = decodedToken.tenant || tenantId
 
@@ -101,9 +127,9 @@ export class MedmindService {
         `/tenant-stats?${query}`
       ) as unknown as MedmindTenantStats
 
-      return result;
+      return result
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
@@ -113,6 +139,11 @@ export class MedmindService {
     pageSize: number
   ): Promise<MedmindPackages> {
     try {
+      const decodedToken: UserPayload = DecodeJWT(
+        token,
+        this.configService.get('JWT_SECRET'),
+      ) as UserPayload
+
       const query = new URLSearchParams({
         pageNumber: pageNumber.toString(),
         pageSize: pageSize.toString(),
@@ -121,12 +152,12 @@ export class MedmindService {
       const result = await this.httpService.GetHttpRequest(
         this.configService.get('CHATBOT'),
         `/medmind-package?${query}`
-      ) as unknown as MedmindPackages;
+      ) as unknown as MedmindPackages
 
-      return result;
+      return result
     } catch (error) {
-      Logger.log(error);
-      throw error;
+      Logger.log(error)
+      throw error
     }
   }
 }

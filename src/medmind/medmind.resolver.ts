@@ -5,6 +5,8 @@ import { MedmindUserNotification, MedmindUserNotificationList } from './entities
 import { MedmindTenantStats } from './entities/medmind-tenant-stats'
 import { MedmindTenantStatsInput } from './dto/medmind-tenant-stats.input'
 import { MedmindPackages } from './entities/medmind-packages'
+import { SuccessResult } from 'src/shared/response'
+import { MedmindTenantStatsBulkUpdateInput } from './dto/medmind-tenant-stats-bulk-update.input'
 
 @Resolver()
 export class MedmindResolver {
@@ -43,6 +45,15 @@ export class MedmindResolver {
     return await this.medmindService.updateMedmindTenantStats(
       token, tenantId, tenantStats
     )
+  }
+
+  @Mutation(() => SuccessResult)
+  async bulkUpdateMedmindTenantStats(
+    @Args("token") token: string,
+    @Args("tenantIds", { type: () => [String] }) tenantIds: string[],
+    @Args("updates") updates: MedmindTenantStatsBulkUpdateInput,
+  ): Promise<SuccessResult> {
+    return await this.medmindService.bulkUpdateMedmindTenantStats(token, tenantIds, updates)
   }
 
   @Query(() => MedmindTenantStats)
