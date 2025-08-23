@@ -148,6 +148,10 @@ export class MedmindService {
       const query = new URLSearchParams({
         pageNumber: pageNumber.toString(),
         pageSize: pageSize.toString(),
+        categories: [
+          "", "free", "coreAccess", "sharedAccessStudent", "sharedAccessDoctor",
+          "sharedAccessPro"
+        ].join(",")
       })
 
       const result = await this.httpService.GetHttpRequest(
