@@ -12,9 +12,10 @@ export class ReportResolver {
   
   @Mutation(() => SuccessResult)
   async generateMedmindUsageReport(
-    @Args("token") token: string
+    @Args("token") token: string,
+    @Args("tenantIds", { type: () => [String], nullable: true }) tenantIds: string[]
   ): Promise<SuccessResult> {
-    return await this.reportService.generateMedmindUsageReport(token)
+    return await this.reportService.generateMedmindUsageReport(token, tenantIds)
   }
 
   @Query(() => MedmindUsageReport)

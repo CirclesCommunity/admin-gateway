@@ -15,17 +15,21 @@ export class ReportService {
   ) {}
 
   async generateMedmindUsageReport(
-    token: string
+    token: string,
+    tenantIds: string[]
   ): Promise<SuccessResult> {
     const decodedToken: UserPayload = DecodeJWT(
       token,
       this.configService.get("JWT_SECRET")
     ) as UserPayload
 
+    const payload = {}
+    if (tenantIds?.length > 0) payload["tenantIds"] = tenantIds
+
     const result = await this.httpService.PostHttpRequest(
       this.configService.get("CHATBOT"),
       "/report/usage",
-      {}
+      payload
     ) as SuccessResult
 
     return result
